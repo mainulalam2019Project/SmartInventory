@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Inventory — Dashboard</title>
+  <link rel="stylesheet" href="/api/v1/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <div id="loginView" class="login-view">
+    <div class="login-card">
+      <h1>Smart Inventory</h1>
+      <p class="subtitle">Supply Chain Management System</p>
+      <form id="loginForm">
+        <label>Username<input type="text" id="username" value="admin" required /></label>
+        <label>Password<input type="password" id="password" value="Admin@123" required /></label>
+        <button type="submit">Sign In</button>
+        <p id="loginError" class="error"></p>
+      </form>
+      <p class="hint">Dev: admin / Admin@123</p>
+    </div>
+  </div>
+
+  <div id="appView" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand">Smart Inventory</div>
+      <nav>
+        <a href="#" data-view="dashboard" class="active">Dashboard</a>
+        <a href="#" data-view="products">Products</a>
+        <a href="#" data-view="inventory">Inventory</a>
+        <a href="#" data-view="warehouses">Warehouses</a>
+        <a href="#" data-view="suppliers">Suppliers</a>
+        <a href="#" data-view="orders">Sales Orders</a>
+        <a href="#" data-view="purchase">Purchase Orders</a>
+        <a href="#" data-view="transfers">Transfers</a>
+        <a href="#" data-view="alerts">Low Stock Alerts</a>
+        <a href="#" data-view="analytics">Analytics</a>
+      </nav>
+      <button id="logoutBtn" class="logout">Logout</button>
+    </aside>
+    <main class="content">
+      <header class="topbar">
+        <h2 id="viewTitle">Dashboard</h2>
+        <div id="userInfo" class="user-info"></div>
+      </header>
+      <section id="viewContainer" class="view-container"></section>
+    </main>
+  </div>
+
+  <script src="/api/v1/app.js"></script>
+</body>
+</html>

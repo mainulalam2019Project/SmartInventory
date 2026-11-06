@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: smart-inventory
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:sqlite}
+  datasource:
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 30000
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+---
+# SQLite profile (development)
+spring:
+  config:
+    activate:
+      on-profile: sqlite
+  datasource:
+    url: jdbc:sqlite:${DB_PATH:./inventory.db}
+    driver-class-name: org.sqlite.JDBC
+    username: ""
+    password: ""
+  sql:
+    init:
+      mode: never
+
+---
+# PostgreSQL profile (production)
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:smart_inventory}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+---
+# Common
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-me-in-production-use-a-long-random-secret-key-at-least-256-bits}
+    expiration-ms: ${JWT_EXPIRATION_MS:86400000}
+  python-analytics:
+    base-url: ${PYTHON_ANALYTICS_URL:http://localhost:8000}
+    api-key: ${PYTHON_ANALYTICS_API_KEY:dev-analytics-key}
+    timeout-ms: ${PYTHON_ANALYTICS_TIMEOUT_MS:10000}
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:3000,http://localhost:5173}
+
+server:
+  port: ${SERVER_PORT:8080}
+  servlet:
+    context-path: /api/v1
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
